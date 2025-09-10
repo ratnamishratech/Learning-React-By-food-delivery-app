@@ -1,27 +1,33 @@
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
+import { useParams } from "react-router-dom";
+import { MENU_API } from "../utils/constants";
+import useResMenu from "../utils/useResMenu";
 
 const ResMenu = () => {
-    const [resInfo, setResInfo] = useState(null);
 
-    useEffect(() => {
-        fetchMenu();
-    }, []);
+  // 13. now create own custom hooks to make code more readable, mentainable and testable.
+    // const [resInfo, setResInfo] = useState(null);
+
+    const {resId} = useParams();
+
+    const resInfo = useResMenu(resId);
+
+    // useEffect(() => {
+    //     fetchMenu();
+    // }, []);
     
-    const fetchMenu = async () => {
-        const data = await fetch(
-            "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=28.7040592&lng=77.10249019999999&restaurantId=26723&catalog_qa=undefined&submitAction=ENTER"
-        );
-        const json = await data.json();
-
-        setResInfo(json?.data);
-    };
+    // const fetchMenu = async () => {
+    //     const data = await fetch(MENU_API + "&restaurantId=" +resId +"&catalog_qa=undefined" );
+    //     const json = await data.json();
+        
+    //     setResInfo(json?.data);
+    // };
    if (resInfo === null) return <Shimmer/>;
 
    const {name, avgRating, costForTwo, cuisines, sla} = resInfo?.cards[2]?.card?.card?.info;
 
-const {itemCards} =
-    resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card?.itemCards || [];
+const itemCards = resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card?.itemCards || [];
 
   return (
     <div className="menu">

@@ -1,6 +1,9 @@
 import ResCard from "./ResCard";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
+
 
 const Body = () => {
 
@@ -169,6 +172,14 @@ const Body = () => {
         setfilterRes(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);        
     };
 
+    const OnlineStatus = useOnlineStatus();
+
+    if(OnlineStatus === false)
+        return (
+            <h1>Please Check your Internet connection!</h1>
+        );
+   
+
     //conditional Rendering
     // if(listofRes.length === 0){
     //     return<Shimmer/>
@@ -178,13 +189,13 @@ const Body = () => {
         <Shimmer/>
     ) : (
         <div className="body">
-            <div className="filter">
+            <div className="filter flex">
                 {/* 8. seach text box  */}
-              <div className="search">
-                <input type="text" className="search-box" value={searchText} onChange={(e) => {
+              <div className="m-4 p-4">
+                <input type="text" className="border border-solid border-black" value={searchText} onChange={(e) => {
                     setsearchText(e.target.value);
                 }}/>
-                <button onClick={() => {
+                <button className="px-4 py-2 bg-green-400 m-4 rounded-lg cursor-pointer" onClick={() => {
                     //filter the res cards and update the UI by search-text
                     const filteredRes = listofRes.filter((res) =>
                        res.info.name.toLowerCase().includes(searchText.toLowerCase())
@@ -204,7 +215,8 @@ const Body = () => {
                 </button> */}
 
                 {/* 7. cont... */}
-                <button className="filter-one" onClick={() => {
+                <div className="m-4 p-4 flex items-center">
+                    <button className=" px-4 py-2 bg-green-400 m-4 rounded-lg cursor-pointer" onClick={() => {
                     const filteredList = listofRes.filter(
                         (res) => res.info.avgRating > 4.2
                     );
@@ -212,8 +224,9 @@ const Body = () => {
                 }}>
                     Top Rated Restaurant
                 </button>
+                </div>
             </div>
-            <div className="res-cont">
+            <div className="flex flex-wrap">
                 {/* 1....
                 <ResCard/> */}
 
@@ -228,9 +241,16 @@ const Body = () => {
                       <ResCard key={restaurant.info.id} resData={restaurant.info} />
                   ))} */}
                   {/* 9.cont... */}
-                   {filterRes.map((restaurant) => (
+                   {/* {filterRes.map((restaurant) => (
                       <ResCard key={restaurant.info.id} resData={restaurant.info} />
-                  ))}
+                  ))} */}
+
+                    {/* 12. i wnat to clickable card with menu */}
+                    {filterRes?.map((restaurant) => ( 
+                        <Link key={restaurant.info.id} to={"/restaurants/" + restaurant.info.id}>
+                        <ResCard resData={restaurant.info} /></Link>
+                    ))}
+
             </div>
         </div>
     );

@@ -1,6 +1,5 @@
 import { CDN_URL } from "../utils/constants";
 
-
 const ResCard = ({ resData }) => {
   // const { resData } = props;
 
@@ -15,8 +14,10 @@ const ResCard = ({ resData }) => {
 
     return(
         // <div className="res-card" style={styleCard}>
-        <div className="res-card" style={{ backgroundColor: "#f0f0f0"}}>
-            <img className="img" src={CDN_URL + cloudinaryImageId}/>
+        <div className="m-4 p-4 w-[250px] rounded-lg bg-gray-100 hover:bg-gray-200"
+        //  style={{ backgroundColor: "#f0f0f0"}} 
+         >
+            <img className="rounded-lg" src={CDN_URL + cloudinaryImageId}/>
             {/* 1. hardcoded data(writing manually):-
             <h3>Briyani</h3>
             <h4>4.4 stars</h4>   
@@ -36,7 +37,7 @@ const ResCard = ({ resData }) => {
             <h4>{resData.info.cuisines}</h4>
             <h4>{resData.info.areaName}</h4> */}
             {/* 4. destructuring */}
-            <h3>{name}</h3>
+            <h3 className="font-bold py-4 text-lg">{name}</h3>
             <h4>⭐{avgRating}</h4>
             <h4>{sla?.slaString}</h4>
            <h4>{cuisines ? cuisines.join(", ") : ""}</h4>

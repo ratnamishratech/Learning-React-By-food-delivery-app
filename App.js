@@ -6,6 +6,15 @@ import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Contact from "./src/components/Contact";
 import Error from "./src/components/Error";
 import ResMenu from "./src/components/ResMenu";
+import { lazy, Suspense } from "react";
+// import Instamart from "./src/components/Instamart";
+
+
+
+
+//13.
+// chuncking, code splitting, dynamic bundling, lazy loading, on demand loading.
+const Instamart = lazy(() => import("./src/components/Instamart"));
 
 // const styleCard = {
 //     backgroundColor: "#f0f0f0"
@@ -47,9 +56,14 @@ const appRouter = createBrowserRouter([
         element: <Contact/>,
         },
          {
-        path:"/restaurants/:resId",
-        element: <ResMenu/>,
+        path:"/Instamart",
+        element: <Suspense fallback={<h1>Loading...</h1>}><Instamart/></Suspense>,
         },
+        {
+        path: "/restaurants/:resId",
+        element: <ResMenu />,
+}
+
     ],
         errorElement: <Error/>,
     },  
