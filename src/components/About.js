@@ -3,6 +3,7 @@
 import UserClass from "./UserClass";
 // import React from "react";
 import { Component } from "react";
+import UserContext from "../utils/UserContext";
 
 // const About = () => {
 //     return (
@@ -36,6 +37,13 @@ class About extends Component {
     return (
       <div>
         <h1>About</h1>
+        <div>LoggedIn User
+          <UserContext.Consumer>
+            {({loggedInUser}) => (
+              <h1 className="font-bold">{loggedInUser}</h1>
+            ) }
+          </UserContext.Consumer>
+        </div>
         <h2>Hello All!</h2>
         <UserClass name={"Ratna (class)"} location={"Delhi class"} />
       </div>

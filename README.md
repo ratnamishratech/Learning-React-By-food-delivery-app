@@ -38,3 +38,7 @@ Footer
     - 1st child comp did mount
     - 2ns child comp did mount
   - parent comp did mount 
+
+  => There is 2 ways to use context
+  1) by hooks -> in functional comp
+  2) by consumer -> in class comp where hooks not exist

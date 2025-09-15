@@ -6,11 +6,12 @@ import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Contact from "./src/components/Contact";
 import Error from "./src/components/Error";
 import ResMenu from "./src/components/ResMenu";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState, useContext } from "react";
 // import Instamart from "./src/components/Instamart";
-
-
-
+import UserContext from "./src/utils/UserContext";
+import { Provider } from "react-redux";
+import appStore from "./src/utils/appStore";
+import Cart from "./src/components/Cart";
 
 //13.
 // chuncking, code splitting, dynamic bundling, lazy loading, on demand loading.
@@ -27,13 +28,28 @@ const Instamart = lazy(() => import("./src/components/Instamart"));
 
 
 const AppLayout = () => {
+   //ep11(part-2) if want to change context value dynamically
+   const [userName, setUserName] = useState();
+   useEffect(() => {
+    //make an api to call username and password
+   const data = {
+    name: "Ratna",
+   };
+   setUserName(data.name);
+   }, []); 
+
     return (
-        <div className="app">
+       <Provider store={appStore}>
+          {/* for changinin dynmaic we want to pass setusername in vlaue  */}
+       <UserContext RouterProvider value={{loggedInUser: userName, setUserName}}>
+         <div className="app">
             <Header/>
             {/* <Body/> */}
             {/* 11. if i want routing but header stick on their place than we use children routes with outlet this replace by those one which needed. */}
             <Outlet/>
         </div>
+       </UserContext>
+       </Provider>
     );
 };
 
@@ -62,7 +78,11 @@ const appRouter = createBrowserRouter([
         {
         path: "/restaurants/:resId",
         element: <ResMenu />,
-}
+        },
+        {
+        path: "/cart",
+        element: <Cart/>,
+        }
 
     ],
         errorElement: <Error/>,

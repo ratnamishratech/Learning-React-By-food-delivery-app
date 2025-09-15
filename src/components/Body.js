@@ -1,8 +1,9 @@
 import ResCard from "./ResCard";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 
 const Body = () => {
@@ -179,6 +180,7 @@ const Body = () => {
             <h1>Please Check your Internet connection!</h1>
         );
    
+        const {loggedInUser, setUserName} = useContext(UserContext);
 
     //conditional Rendering
     // if(listofRes.length === 0){
@@ -189,13 +191,13 @@ const Body = () => {
         <Shimmer/>
     ) : (
         <div className="body">
-            <div className="filter flex">
+            <div className="filter justify-center flex">
                 {/* 8. seach text box  */}
               <div className="m-4 p-4">
-                <input type="text" className="border border-solid border-black" value={searchText} onChange={(e) => {
+                <input type="text" className="border border-solid border-black rounded-lg h-8 p-2" value={searchText} onChange={(e) => {
                     setsearchText(e.target.value);
                 }}/>
-                <button className="px-4 py-2 bg-green-400 m-4 rounded-lg cursor-pointer" onClick={() => {
+                <button className="px-3 py-1.5 bg-gray-700 m-4 text-white rounded-lg cursor-pointer hover:bg-gray-300 hover:text-black font-medium" onClick={() => {
                     //filter the res cards and update the UI by search-text
                     const filteredRes = listofRes.filter((res) =>
                        res.info.name.toLowerCase().includes(searchText.toLowerCase())
@@ -216,7 +218,7 @@ const Body = () => {
 
                 {/* 7. cont... */}
                 <div className="m-4 p-4 flex items-center">
-                    <button className=" px-4 py-2 bg-green-400 m-4 rounded-lg cursor-pointer" onClick={() => {
+                    <button className=" px-4 py-1.5 bg-gray-700 text-white rounded-lg cursor-pointer hover:bg-gray-300 hover:text-black font-medium m-4" onClick={() => {
                     const filteredList = listofRes.filter(
                         (res) => res.info.avgRating > 4.2
                     );
@@ -225,8 +227,14 @@ const Body = () => {
                     Top Rated Restaurant
                 </button>
                 </div>
-            </div>
-            <div className="flex flex-wrap">
+                 {/* ep11 part-2 */}
+                <div className="search m-4 p-4 flex items-center font-normal">
+                     <label>UserName : </label>
+                     <input className="m-2 border border-black rounded-lg h-8 p-2" value={loggedInUser} onChange={(e) => setUserName(e.target.value)}/>
+                </div> 
+            </div>  
+
+            <div className="flex justify-center flex-wrap">
                 {/* 1....
                 <ResCard/> */}
 

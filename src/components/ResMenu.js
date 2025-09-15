@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
-import { useParams } from "react-router-dom";
+import { useAsyncError, useParams } from "react-router-dom";
 import { MENU_API } from "../utils/constants";
 import useResMenu from "../utils/useResMenu";
+import ResCategory from "./ResCategory";
 
 const ResMenu = () => {
+
+  //ep11(part-2 context to avoid props drilling(eg dummy))
+  const dummy = "Dummy Data passed";
 
   // 13. now create own custom hooks to make code more readable, mentainable and testable.
     // const [resInfo, setResInfo] = useState(null);
@@ -12,6 +16,8 @@ const ResMenu = () => {
     const {resId} = useParams();
 
     const resInfo = useResMenu(resId);
+
+    const [showIndex, setshowIndex] = useState(null);
 
     // useEffect(() => {
     //     fetchMenu();
@@ -29,25 +35,28 @@ const ResMenu = () => {
 
 const itemCards = resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card?.itemCards || [];
 
-  return (
-    <div className="menu">
-      <h1>{name}</h1>
-      <h3>⭐ {avgRating}</h3>
-      <h3>
-        {cuisines?.join(", ")} - {costForTwo / 100} Rs.
-      </h3>
-      <h3>{sla?.slaString}</h3>
 
-      <h2>Menu</h2>
-      <ul>
-        {itemCards.map((item) => (
-          <li key={item?.card?.info?.id}>
-            {item?.card?.info?.name} - Rs.
-            {item?.card?.info?.price / 100 ||
-              item?.card?.info?.defaultPrice / 100}
-          </li>
-        ))}
-      </ul>
+// console.log(resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards);
+// ep 11 
+  const categories = resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
+    (c) => c.card?.card?.["@type"] === "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+  );
+  // console.log(categories);
+
+  return (
+    <div className="text-center">
+      <h1 className="font-bold text-2xl m-3">{name}</h1>
+      <div className="font-serif">
+        <h2>⭐ {avgRating} - ₹ {costForTwo / 100} for two</h2>
+       <h3 className="text-red-500">{cuisines?.join(", ")}</h3>
+       <h3>{sla?.slaString}</h3>
+      </div>
+      {/* categories accordions */}
+      {categories.map((category, index) => (
+  <ResCategory key={category?.card?.card?.title || i} data={category?.card?.card} showItems={index === showIndex ? true : false} setshowIndex = {() => setshowIndex(index)} dummy = {dummy}
+  />
+))}
+
     </div>
   );
 };
