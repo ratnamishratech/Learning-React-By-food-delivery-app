@@ -38,7 +38,7 @@ const ResCard = ({ resData }) => {
       <h3 className="font-bold overflow-hidden overflow-ellipsis whitespace-nowrap text-lg">
         {name}
       </h3>
-      <p className="text-gray-600  overflow-hidden overflow-ellipsis whitespace-nowrap text-sm mb-1">
+      <p className="text-gray-600 overflow-hidden overflow-ellipsis whitespace-nowrap text-sm mb-1">
         {cuisines ? cuisines.join(", ") : ""}
       </p>
       <div className="flex gap-1 text-sm text-gray-800">

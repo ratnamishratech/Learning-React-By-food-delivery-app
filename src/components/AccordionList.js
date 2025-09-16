@@ -31,7 +31,7 @@ const AccordionList = ({ items, dummy }) => {
             </div>
             <p className="text-xs">{item.card.info.description}</p>
           </div>
-          <div className="w-3/12  p-1">
+          <div className="w-3/12 rounded-lg p-1">
             <div>
               <img src={CDN_URL + item.card.info.imageId} />{" "}
             </div>
