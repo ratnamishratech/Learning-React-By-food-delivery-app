@@ -42,3 +42,8 @@ Footer
   => There is 2 ways to use context
   1) by hooks -> in functional comp
   2) by consumer -> in class comp where hooks not exist
+
+  => lazy-loding
+  why suspence with lazy-loading :- Without <Suspense>, React wouldn’t know what to display during that loading period and would throw an error. While the dynamic import() is still fetching the code, React shows whatever you pass to fallback (for example a spinner or “Loading…” text).
+
+  

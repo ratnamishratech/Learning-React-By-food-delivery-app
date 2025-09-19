@@ -157,14 +157,28 @@ const Body = () => {
   //whenever state var update anything react triggers a reconciliation cycle(re-render the comp).
   console.log("Body Rendered");
 
+  function handleSearch() {
+    //filter the res cards and update the UI by search-text
+    const filteredRes = listofRes.filter((res) =>
+      res.info.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+    // console.log(filteredRes);
+    console.log(searchText);
+
+    // setlistofRes(filteredRes);     //9. cont....
+    return setfilterRes(filteredRes);
+  }
+
+  useEffect(() => {
+    handleSearch();
+  }, [searchText]);
+
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
-    const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.7040592&lng=77.10249019999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-    );
+    const data = await fetch("https://food-del-backend-xe66.onrender.com/api");
 
     const json = await data.json();
     setlistofRes(
@@ -204,14 +218,7 @@ const Body = () => {
           />
           <button
             className="px-3 py-1.5 bg-gray-700 m-4 text-white rounded-lg cursor-pointer hover:bg-gray-300 hover:text-black font-medium"
-            onClick={() => {
-              //filter the res cards and update the UI by search-text
-              const filteredRes = listofRes.filter((res) =>
-                res.info.name.toLowerCase().includes(searchText.toLowerCase())
-              );
-              // setlistofRes(filteredRes);     //9. cont....
-              setfilterRes(filteredRes);
-            }}
+            onClick={handleSearch}
           >
             Search
           </button>

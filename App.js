@@ -6,7 +6,7 @@ import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Contact from "./src/components/Contact";
 import Error from "./src/components/Error";
 import ResMenu from "./src/components/ResMenu";
-import { lazy, Suspense, useEffect, useState, useContext } from "react";
+import { lazy, Suspense, useEffect, useState} from "react";
 // import Instamart from "./src/components/Instamart";
 import UserContext from "./src/utils/UserContext";
 import { Provider } from "react-redux";
@@ -15,6 +15,7 @@ import Cart from "./src/components/Cart";
 
 //13.
 // chuncking, code splitting, dynamic bundling, lazy loading, on demand loading.
+// (This line uses React’s code-splitting feature to load the Instamart component only when it’s actually rendered, not during the initial bundle download.)
 const Instamart = lazy(() => import("./src/components/Instamart"));
 
 // const styleCard = {
@@ -40,7 +41,7 @@ const AppLayout = () => {
 
     return (
        <Provider store={appStore}>
-          {/* for changinin dynmaic we want to pass setusername in vlaue  */}
+          {/* for changing dynmaically we want to pass setusername in vlaue eg: Ratna */}
        <UserContext RouterProvider value={{loggedInUser: userName, setUserName}}>
          <div className="app">
             <Header/>

@@ -22,26 +22,27 @@ import UserContext from "../utils/UserContext";
 // class About extends React.Component {
 // or
 class About extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        // console.log("parent const");
-    }
+    // console.log("parent const");
+  }
 
-    componentDidMount() {
+  componentDidMount() {
     //   console.log("parent comp did mount");
-    }
+  }
 
   render() {
     console.log("parent render");
     return (
       <div>
         <h1>About</h1>
-        <div>LoggedIn User
+        <div>
+          <h1>LoggedIn User</h1>
           <UserContext.Consumer>
-            {({loggedInUser}) => (
+            {({ loggedInUser }) => (
               <h1 className="font-bold">{loggedInUser}</h1>
-            ) }
+            )}
           </UserContext.Consumer>
         </div>
         <h2>Hello All!</h2>
